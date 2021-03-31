@@ -1,9 +1,11 @@
-function NotFound() {
-  return (
-    <div className="notFound">
-      this is NotFound
-    </div>
-  );
-}
+import React from 'react';
 
-export default NotFound;
+export default class NotFound extends React.Component {
+  render() {
+  	return (
+  	  <div className="notFound">
+  	    this is NotFound
+  	  </div>
+  	);
+  }
+}
