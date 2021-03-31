@@ -1,25 +1,19 @@
 import React from 'react';
 import { ReactComponent as Logo } from '../svg/logo.svg';
 import {
-  NavLink,
-  BrowserRouter as Router,
+  NavLink
 } from "react-router-dom";
 
+import { Link } from '../controls/lt-router';
 
+interface HeaderProps {
+  menuLinks : Array<Link>
+}
 
-class Header extends React.Component {
-  page: Array < [String, String] > = [
-    ["/", "Home"],
-    ["/about", "About"],
-    ["/projects", "Projects"],
-    ["/blog", "Blog"],
-    ["/contact", "Contact"],
-  ]
-  // constructor(props: any) {
-  //   super(props);
-  //   // Don't call this.setState() here!
-  // }
+export default class Header extends React.Component<HeaderProps> {
   render() {
+    console.log(this.props)
+
     return (
       <div className="header-container clearfix">
 			  <header>
@@ -31,8 +25,8 @@ class Header extends React.Component {
 				</div>
 				<nav>
 					<ul>
-					{this.page.map((value:[String,String]) => {
-					        return <li><NavLink data-text={value[1]} exact to={`${value[0]}`}><span>{value[1]}</span></NavLink></li>
+					{this.props.menuLinks.map((link:Link) => {
+	           return <li key={link.name}><NavLink data-text={link.name} exact to={`${link.url}`}><span>{link.name}</span></NavLink></li>
 					})}
 					</ul>
 				</nav>
@@ -41,6 +35,3 @@ class Header extends React.Component {
     );
   }
 }
-
-
-export default Header;

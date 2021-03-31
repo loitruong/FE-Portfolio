@@ -7,12 +7,13 @@ import LTRouter from './controls/lt-router';
 // import reportWebVitals from './reportWebVitals';
 
 
-let ltLinks = new LTRouter();
+let ltRouter = new LTRouter();
 
-/*<Header />*/
 ReactDOM.render(
 	<React.StrictMode>
-		{ltLinks.getRouter(React.createElement(Header))}
+		{ltRouter.getRouter( React.createElement(Header, {
+			menuLinks : ltRouter.getMenuLinks()
+		}))}
   </React.StrictMode>,
   document.getElementById('root')
 );
