@@ -1,10 +1,11 @@
 import React from 'react';
+import Slider from '../components/slider';
 
 class Home extends React.Component {
   render() {
   	return (
   	  <div className="home">
-  	    this is home
+  	    <Slider />
   	  </div>
   	);
   }

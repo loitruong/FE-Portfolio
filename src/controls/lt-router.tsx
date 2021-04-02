@@ -97,11 +97,13 @@ export default class LTRouter{
 			<Router>
 					{rEl}
 			  	<div className="body-container">
-					<Switch>						
-						{this.links.map((link) => {
-						        return <Route key="{link.name}" exact path={link.url}>{link.element}</Route>
-						})}
-					</Switch>
+						<div className="app-container">
+							<Switch>
+								{this.links.map((link) => {
+								        return <Route key="{link.name}" exact path={link.url}>{link.element}</Route>
+								})}
+							</Switch>
+						</div>
 			    </div>
 			</Router>
 		)
