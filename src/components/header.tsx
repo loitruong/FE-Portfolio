@@ -39,8 +39,6 @@ export default class Header extends React.Component<HeaderProps> {
 
   }
   render() {
-    console.log(this.props)
-
     return (
       <div className="header-container clearfix">
 			  <header>
@@ -75,7 +73,7 @@ export default class Header extends React.Component<HeaderProps> {
 class SocialLink extends React.Component<{href: string, fa: string; name:string}> {
   render(){
     return (
-      <a target="_blank" href={this.props.href}><i className={`fab ${this.props.fa}`}></i><span>{this.props.name}</span></a>
+      <a target="_blank" rel="noreferrer" href={this.props.href}><i className={`fab ${this.props.fa}`}></i><span>{this.props.name}</span></a>
     )
   }
 }

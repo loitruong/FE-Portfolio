@@ -3,9 +3,9 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link as RouterLink,
-    useRouteMatch,
-    useParams
+    // Link as RouterLink,
+    // useRouteMatch,
+    // useParams
 } from "react-router-dom";
 
 import Home from '../views/home';
@@ -13,9 +13,9 @@ import About from '../views/about';
 import NotFound from '../views/404';
 
 /**
- * LT Links. 
+ * LT Router
  *
- * LT Links will mapping all the site URLs to the components.
+ * LT Rtouer will use React router classes and define page and status route
  * 
  * @since      03-30-2021
  * @access     public
