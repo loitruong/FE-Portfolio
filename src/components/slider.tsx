@@ -1,7 +1,4 @@
 import React, {createRef} from 'react';
-import ReactDOM from 'react-dom';
-// I might use this to do the component transition but will see about that 
-//import ReactCSSTransitionGroup from 'react-transition-group';
 import { ReactComponent as IconDown } from '../svg/icon-down.svg';
 import { ReactComponent as IconUp } from '../svg/icon-up.svg';
 import { ReactComponent as IconLeft } from '../svg/icon-leftarrow.svg';
@@ -75,7 +72,6 @@ export default class Slider extends React.Component<{},{slideName:string}> {
 
 		if (activeSlide === null){
 			throw new Error("current slide not found. hmm this shouldn't happen.");
-			return;
 		}
 
 		let prevSlide = activeSlide!.previousElementSibling || this.mElement!.querySelector(".Slider__Slide:last-child");
@@ -159,7 +155,7 @@ export default class Slider extends React.Component<{},{slideName:string}> {
 
 
 		//LTCM-LOOKBACK
-		//This is an ugly or only way that I can think of to be able to pass
+		//This is an ugly and only way that I can think of to be able to pass
 		//paramter into the event listener without using anonymous function
 		//I cant use anoynyumous function because I need to remove the event after componenent unmount
 
