@@ -2,21 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import Header from './components/header';
-import LTRouter from './controls/lt-router';
-
-// import reportWebVitals from './reportWebVitals';
+import ltConfig from './controls/lt-config';
 
 
-let ltRouter = new LTRouter();
+class App extends React.Component {
+  render() {
+    return (
+			<div id="reactApp">
+					{ltConfig.myRouter.getRouter( React.createElement(Header))}
+			</div>
+    );
+  }
+}
+
 
 ReactDOM.render(
 	<React.StrictMode>
-		{ltRouter.getRouter( React.createElement(Header, {
-			menuLinks : ltRouter.getMenuLinks()
-		}))}
+		<App />
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -1,9 +1,11 @@
 import React, {createRef} from 'react';
+import ltConfig from '../controls/lt-config';
 import { ReactComponent as IconDown } from '../svg/icon-down.svg';
 import { ReactComponent as IconUp } from '../svg/icon-up.svg';
 import { ReactComponent as IconLeft } from '../svg/icon-leftarrow.svg';
 import { ReactComponent as IconRight } from '../svg/icon-rightarrow.svg';
 import { ReactComponent as IconMouse } from '../svg/icon-mouse.svg';
+import { ReactComponent as IconDart } from '../svg/icon-dart.svg';
 import './slider.scss';
 
 
@@ -61,6 +63,7 @@ export default class Slider extends React.Component<{},{slideName:string}> {
 		this.state = {slideName: this.banners[this.activeSlide] };
 
 		this.isChangingSlide = false;
+		this.handleWheel = this.handleWheel.bind(this);
 	}
 
 
@@ -99,17 +102,17 @@ export default class Slider extends React.Component<{},{slideName:string}> {
 
 		}, self.slideTotalAnimationTime)//1000 is waiting for all animation to be done
 		
-		console.log(activeSlide, nextSlide, prevSlide);		
 		
 	}
 
-	handleWheel(event:any, self:Slider){
+	handleWheel(event:any){
 		/*
 			LTCM-NOTE
 			This slider will be base on wheel to be either change slider up/prev or down/next slide
 
 			{WHEELTRIGGER} - when user wheel to the same direction and reach to this number and it will trigger the event
 		*/
+		var self = this;
 
 		if (self.isChangingSlide) return;
 
@@ -144,33 +147,14 @@ export default class Slider extends React.Component<{},{slideName:string}> {
 	}
 
 
-	_handleWheelWrapper (event: any){
-		throw new Error("_handleWheelWrapper need to be implement before use" );
-	} 
-
-	componentDidMount() {
-		var self = this;
-		
+	componentDidMount() {		
 		this.mElement = this.mRef.current;
 
-
-		//LTCM-LOOKBACK
-		//This is an ugly and only way that I can think of to be able to pass
-		//paramter into the event listener without using anonymous function
-		//I cant use anoynyumous function because I need to remove the event after componenent unmount
-
-		self._handleWheelWrapper = (event: any)=>{
-			self.handleWheel(event,self);
-		
-		}
-
-
-	  window.addEventListener('wheel', self._handleWheelWrapper, false)
-
+	  window.addEventListener('wheel', this.handleWheel, false)
 	}
 
 	componentWillUnmount() {
-	  window.removeEventListener('wheel', this._handleWheelWrapper)
+	  window.removeEventListener('wheel', this.handleWheel)
 	}
 
 
@@ -180,7 +164,7 @@ export default class Slider extends React.Component<{},{slideName:string}> {
     	<div ref={this.mRef} className="Slider">
     		<div>
 					{this.banners.map((banner:string, index) => {
-	           return  <Slide isActive={self.activeSlide === index} slideName={banner} />
+	           return  <Slide key={"banner_"+index} isActive={self.activeSlide === index} slideName={banner} />
 					})}
 				</div>
     		<div className="Slider__Controller">
@@ -207,6 +191,14 @@ class Slide extends React.Component<{slideName:string, isActive:boolean},{}>{
 		return (
 			<div className={`Slider__Slide ${activeClass}`}>
 				<div className="Slider__SlideBG" style={slideStyle}>
+				</div>
+				<div className="Slider__Content">
+					<div className="Slider__Content__Cell">			
+						<svg className="Slider__Box" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 800 600"><rect x="0" y="0" width="100%" height="100%"/></svg>
+						<h2>Experienced <br /> Web Developer</h2>
+						<p>Know more about me</p>
+						<a className="Slider__Button" href="/about" data-text="About Me"><span>About Me</span> <IconDart /></a>
+					</div>
 				</div>
 			</div>
 		)
