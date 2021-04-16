@@ -92,10 +92,10 @@ export default class LTRouter{
 		return this.links.filter( (link) => link.type ===  LinkType.PAGE);
 	}
 
-	public getRouter(rEl?:React.CElement<any,any>){
+	public getRouter(children:JSX.Element){
 		return(
 			<Router>
-					{rEl}
+					{children}
 			  	<div className="body-container">
 						<div className="app-container">
 							<Switch>

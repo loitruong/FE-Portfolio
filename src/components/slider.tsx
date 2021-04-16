@@ -1,5 +1,7 @@
 import React, {createRef} from 'react';
+import { Link, NavLink } from "react-router-dom";
 import ltConfig from '../controls/lt-config';
+import { PageType } from '../controls/lt-router';
 import { ReactComponent as IconDown } from '../svg/icon-down.svg';
 import { ReactComponent as IconUp } from '../svg/icon-up.svg';
 import { ReactComponent as IconLeft } from '../svg/icon-leftarrow.svg';
@@ -21,9 +23,17 @@ enum CSSANIMATION {
 	NEXT2CENTER = "next2center"
 }
 
-export default class Slider extends React.Component<{},{slideName:string}> {
+interface Banner{
+	img: string;
+	title: string;
+	desc: string;
+	linkName : string;
+	link: string;
+}
 
-	banners 		: Array<string> = [];
+export default class Slider extends React.Component<{},{slideState:Banner}> {
+
+	banners 		: Array<Banner> = [];
 	activeSlide : number;
 
 	//currentWheel will track the user mouse wheel direction
@@ -42,17 +52,34 @@ export default class Slider extends React.Component<{},{slideName:string}> {
 	// I need to come up with a better solution to calculate the time instead of reply on hard-code for this number
 	// the barrier is I'm using animation via CSS class, and it's hard to get the variable from SCSS
 	// maybe I should define CSS animation duration in javascript
-	slideTotalAnimationTime: number = 1000 
+	slideTotalAnimationTime: number = 500 
 
 
 	constructor(props:any){
-		super(props)
-
+		super(props);
 		this.banners = [
-			"banner-01.jpg",
-			"banner-02.jpg",
-			"banner-03.jpg",
-			"banner-04.jpg",
+			{ 
+				img: "banner-01.jpg",
+				title: 'Developing \n the Future',
+				desc: 'Click to check out my works!',
+				linkName: 'My Works',
+				link: ltConfig.myRouter.getLink(PageType.PROJECTS)!.url
+				//link: ''
+			},
+			{ 
+				img: "banner-02.jpg",
+				title: 'Experienced \n Web Developer',
+				desc: 'Know more about me',
+				linkName: 'About Me',
+				link: ltConfig.myRouter.getLink(PageType.ABOUT)!.url
+			},
+			{ 
+				img: "banner-03.jpg",
+				title: 'Connecting \n the Web',
+				desc: 'Tell me your concerns',
+				linkName: 'Contact Me',
+				link: ltConfig.myRouter.getLink(PageType.CONTACT)!.url
+			}
 		];
 
 		this.currentWheel = 0; 
@@ -60,10 +87,12 @@ export default class Slider extends React.Component<{},{slideName:string}> {
 		this.activeSlide = 0;
 
 		//set default state 
-		this.state = {slideName: this.banners[this.activeSlide] };
+		this.state = {slideState: this.banners[this.activeSlide] };
 
 		this.isChangingSlide = false;
 		this.handleWheel = this.handleWheel.bind(this);
+		this.nextClick = this.nextClick.bind(this);
+		this.prevClick = this.prevClick.bind(this);
 	}
 
 
@@ -95,7 +124,7 @@ export default class Slider extends React.Component<{},{slideName:string}> {
 
 		setTimeout(function() { 
 			self.setState({
-				slideName: self.banners[self.activeSlide] 
+				slideState: self.banners[self.activeSlide] 
 			});
 
 			self.isChangingSlide = false;
@@ -146,6 +175,30 @@ export default class Slider extends React.Component<{},{slideName:string}> {
 		}
 	}
 
+	nextClick(event:any){
+		let self = this;
+		event.preventDefault();
+		self.isChangingSlide = true;
+		self.activeSlide++;
+		if(self.activeSlide >= self.banners.length){
+			self.activeSlide = 0;
+		}
+		self.changeSlide(Direction.NEXT);
+	}
+
+
+	prevClick(event:any){
+		let self = this;
+		event.preventDefault();
+		self.isChangingSlide = true;
+		self.activeSlide--;
+		if(self.activeSlide < 0){
+			self.activeSlide = self.banners.length-1;
+		}
+		self.changeSlide(Direction.PREVIOUS);
+	}
+
+
 
 	componentDidMount() {		
 		this.mElement = this.mRef.current;
@@ -163,29 +216,30 @@ export default class Slider extends React.Component<{},{slideName:string}> {
     return (
     	<div ref={this.mRef} className="Slider">
     		<div>
-					{this.banners.map((banner:string, index) => {
-	           return  <Slide key={"banner_"+index} isActive={self.activeSlide === index} slideName={banner} />
+					{this.banners.map((banner:Banner, index) => {
+	           return  <Slide key={"banner_"+index} isActive={self.activeSlide === index} banner={banner} />
 					})}
 				</div>
     		<div className="Slider__Controller">
-    			<button  type="button"><span>Up</span><IconUp /></button>
+    			<button onClick={self.prevClick} type="button"><span>Up</span><IconUp /></button>
     			<span><IconMouse /></span>
-    			<button  type="button"><span>Down</span><IconDown /></button>
+    			<button onClick={self.nextClick} type="button"><span>Down</span><IconDown /></button>
     		</div>
 	    	<div className="Slider__MobileController">
-	    	  <button className="Slider__MobileController__Previous" type="button"><span>Previous</span><IconLeft /></button>
-	    	  <button className="Slider__MobileController__Next" type="button"><span>Next</span><IconRight /></button>
+	    	  <button onClick={self.prevClick} className="Slider__MobileController__Previous" type="button"><span>Previous</span><IconLeft /></button>
+	    	  <button onClick={self.nextClick} className="Slider__MobileController__Next" type="button"><span>Next</span><IconRight /></button>
 	    	</div>
     	</div>
     );
   }
 }
 
-class Slide extends React.Component<{slideName:string, isActive:boolean},{}>{
-	BANNERPATH : string =  process.env.PUBLIC_URL +"/assets/banner/";
+class Slide extends React.Component<{banner:Banner, isActive:boolean},{}>{
 	render(){
+		console.log('hey im render first from slide');
+		let BANNERPATH  =  process.env.PUBLIC_URL +"/assets/banner/";
 		let slideStyle = {
-			backgroundImage: "url("+ this.BANNERPATH + this.props.slideName + ")"
+			backgroundImage: "url("+ BANNERPATH + this.props.banner.img + ")"
 		}
 		let activeClass = this.props.isActive ? 'Active' : '';
 		return (
@@ -195,9 +249,12 @@ class Slide extends React.Component<{slideName:string, isActive:boolean},{}>{
 				<div className="Slider__Content">
 					<div className="Slider__Content__Cell">			
 						<svg className="Slider__Box" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 800 600"><rect x="0" y="0" width="100%" height="100%"/></svg>
-						<h2>Experienced <br /> Web Developer</h2>
-						<p>Know more about me</p>
-						<a className="Slider__Button" href="/about" data-text="About Me"><span>About Me</span> <IconDart /></a>
+						<h2>{this.props.banner.title}</h2>
+						<p>{this.props.banner.desc}</p>
+						<NavLink className="Slider__Button" to={this.props.banner.link} data-text={this.props.banner.linkName}>
+							<span>{this.props.banner.linkName}</span>
+							<IconDart />
+						</NavLink >
 					</div>
 				</div>
 			</div>

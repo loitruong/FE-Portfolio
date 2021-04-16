@@ -3,13 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import Header from './components/header';
 import ltConfig from './controls/lt-config';
+import LTRouter from './controls/lt-router';
 
 
 class App extends React.Component {
+  constructor(props:any){
+    super(props);
+    ltConfig.myRouter = new LTRouter();
+  }
   render() {
     return (
 			<div id="reactApp">
-					{ltConfig.myRouter.getRouter( React.createElement(Header))}
+					{ltConfig.myRouter.getRouter( <Header /> )}
 			</div>
     );
   }

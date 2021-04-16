@@ -1,391 +1,609 @@
 @import '../scss/variables.scss';
 
 
-.Slider{
-	width: 100%;
-	height: 100vh;
-	//overflow: hidden;
-	position: relative;
-	margin-right: 290px;
-	font-size: 18px;
-	@media($xxlg){
-		margin-right: 240px;
-	}
-	@media($lg){
-		margin-right: 160px
-	}
-	@media($md){
-		margin-right: 0;
-		height: calc(100vh - #{$menu-size});
-	}
+.Slider {
+  width: 100%;
+  height: 100vh;
+  //overflow: hidden;
+  position: relative;
+  margin-right: 290px;
+  font-size: 18px;
+
+  @media($xxlg) {
+    margin-right: 240px;
+  }
+
+  @media($lg) {
+    margin-right: 160px
+  }
+
+  @media($md) {
+    margin-right: 0;
+    height: calc(100vh - #{$menu-size});
+  }
 
 
 
 
 
 
-	.Slider__SlideBG{
-		background: transparent;
-		width: 100%;
-		height: 100vh;
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		position: absolute;
-		left: 0;
-		top: 0;
-		background-color: $black;
-		@media($md){
-			height: calc(100vh - #{$menu-size});
-		}
-	}
-	.Slider__Content{
-		width: 800px;
-		padding: 0px 80px;
-		transform: translateX(0);
-		margin-right: -160px;
-		height: 600px;
-		max-height: 90vh;
-		vertical-align: middle;
-		display: table;
-		z-index: 1;
-		@media($xxlg){
-			margin-right: -100px;
-			width: 600px;
-			height: 450px;
-		}
-		@media($lg){
-			margin-right: -80px;
-		}
-		@media($md){
-			width: 100%;
-			margin: 0;
-			height: calc(100vh - #{$menu-size} - 58.64px);
-		}
-		.Slider__Content__Cell{
-			display: table-cell;
-			vertical-align: middle;
-		}
-		h2{
-			font-size: 72px;
-			font-family: $title-font;
-			position: relative;
-			@media($xxlg){
-				font-size: 68px;
-			}
-			@media($phone){
-				font-size: 50px;
-			}
-			@media($phone-sm){
-				font-size: 42px;
-			}
-		}
-		p{
-			position: relative;
-		}
-		.Slider__Box{
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 800px;
-			height: auto;
-			@media($xxlg){
-				width: 600px;
-				height: auto;
-			}
-			@media($md){
-				display: none;
-			}
-			rect{
-				stroke-width: 3px;
-				stroke: $red;
-				stroke-dasharray: 150 540;
-				fill: rgba(255,255,255,.75);
-				@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-					stroke-dasharray: 660 0;
-					stroke-width: 1px;
-				}
-			}
-		}
-	}
+  .Slider__SlideBG {
+    background: transparent;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: $black;
 
-	.Slider__Button{
-		color: $red;
-		display: inline-flex;
-		width: auto;
-		position: relative;
-		padding: 0 50px 0 45px;
-		height: 40px;
-		align-items: center;
-		outline: none;
-		&:focus, &:hover{
-			padding: 0 50px 0 45px;
-			text-decoration: none;
-			&:before{
-				width: 100%;
-			}
-			&:after{
-				width: 100%;
-				transition: all .3s linear 0.13s;
-				letter-spacing: normal;
-			}
-			span{
-				color: transparent;
-			}
-			svg{
-				left: 100%;
-				transform: translate(-35px, -8px);
-			}
-		}
-		&:before{
-			content: '';
-			width: 40px;
-			height: 40px;
-			background-color: $red;
-			border-radius: 50px;
-			display: block;
-			position: absolute;
-			left: 0;
-			top: 0;
-			transition: linear .3s all;
-			z-index: 0;
-		}
-		&:after{
-			content: attr(data-text);
-			position: absolute;
-			left: 45px;
-			top: 50%;
-			width: 0;
-			transform: translateY(-10px);
-			height: 100%;
-			color: white;
-			transition: all .3s linear -0.03s;
-			white-space: nowrap;
-			overflow: hidden;
-			pointer-events: none;
-			z-index: 1;
-			letter-spacing: -3px;
-		}
-		svg{
-			width: 16px;
-			height: 16px;
-			position: absolute;
-			top: 50%;
-			left: 13.5px;
-			transform: translate(0, -8px);
-			transition: linear .3s all;
-			display: block;
-			background-color: $red;
-			z-index: 2;
-			path{
-				fill: white;
-			}
-		}
-		span{
-			position: relative;
-			z-index: 1;
-		}
-	}
-	.Slider__Controller{
-		position: absolute;
-		right: -290px;
-		top: 50%;
-		transform: translateY(-71px);
-		@media($xxlg){
-			right: -240px;
-		}
-		@media($lg){
-			right: -160px;
-		}
-		@media($md){
-			display: none;
-		}
-		svg{
-			width: 50px;
-			height: 50px;
-			@media($lg){
-				width: 40px;
-				height: 40px;
-			}
-		}
-		>span{
-			display: block;
-			margin: 10px 0;
-			@media($lg){
-				margin: 5px 0;
-			}
-		}
-		button{
-			background: none;
-			border: none;
-			outline: none;
-			display: block;
-			cursor: pointer;
-			padding: 0;
-			margin-left: 18px;
-			@media($lg){
-				margin-left: 13px;
-			}
-			span{
-				display: none;
-			}
-			svg{
-				width: 15px;
-				height: 30px;
-			}
-		}
-	}
-	.Slider__MobileController{
-		display: none;
-		position: absolute;
-		left: 0;
-		right: 0;
-		width: 100%;
-		bottom: 0;
-		z-index: 2;
-		@media($md){
-			display: block;
-		}
-		button{
-			text-align: center;
-			background-color: rgba(0,0,0,.8);
-			border: none;
-			cursor: pointer;
-			padding: 18px 24px;
-			outline: none;
-			&:focus, &:active{
-				background-color: $red;
-			}
-			span{
-				display: none;
-			}
-			svg{
-				width: 10px;
-				height: 18.64px;
-				fill: white;
-			}
-		}
-		button:last-child{
-			float: right;
-		}
-	}
+    @media($md) {
+      height: calc(100vh - #{$menu-size});
+    }
+  }
+
+
+  .Slider__Button {
+    color: $red;
+    display: inline-flex;
+    width: auto;
+    position: relative;
+    padding: 0 50px 0 45px;
+    height: 40px;
+    align-items: center;
+    outline: none;
+
+    &:focus,
+    &:hover {
+      padding: 0 50px 0 45px;
+      text-decoration: none;
+
+      &:before {
+        width: 100%;
+      }
+
+      &:after {
+        width: 100%;
+        transition: all .3s linear 0.13s;
+        letter-spacing: normal;
+      }
+
+      span {
+        color: transparent;
+      }
+
+      svg {
+        left: 100%;
+        transform: translate(-35px, -8px);
+      }
+    }
+
+    &:before {
+      content: '';
+      width: 40px;
+      height: 40px;
+      background-color: $red;
+      border-radius: 50px;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: linear .3s all;
+      z-index: 0;
+    }
+
+    &:after {
+      content: attr(data-text);
+      position: absolute;
+      left: 45px;
+      top: 50%;
+      width: 0;
+      transform: translateY(-10px);
+      height: 100%;
+      color: white;
+      transition: all .3s linear -0.03s;
+      white-space: nowrap;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+      letter-spacing: -3px;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      top: 50%;
+      left: 13.5px;
+      transform: translate(0, -8px);
+      transition: linear .3s all;
+      display: block;
+      background-color: $red;
+      z-index: 2;
+
+      path {
+        fill: white;
+      }
+    }
+
+    span {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .Slider__Controller {
+    position: absolute;
+    right: -290px;
+    top: 50%;
+    transform: translateY(-71px);
+    z-index: 5;
+    background: white;
+
+    @media($xxlg) {
+      right: -240px;
+    }
+
+    @media($lg) {
+      right: -160px;
+    }
+
+    @media($md) {
+      display: none;
+    }
+
+    svg {
+      width: 50px;
+      height: 50px;
+
+      @media($lg) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    >span {
+      display: block;
+      margin: 10px 0;
+
+      @media($lg) {
+        margin: 5px 0;
+      }
+    }
+
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      display: block;
+      cursor: pointer;
+      padding: 0;
+      margin-left: 18px;
+
+      @media($lg) {
+        margin-left: 13px;
+      }
+
+      span {
+        display: none;
+      }
+
+      svg {
+        width: 15px;
+        height: 30px;
+      }
+    }
+  }
+
+  .Slider__MobileController {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    bottom: 0;
+    z-index: 2;
+
+    @media($md) {
+      display: block;
+    }
+
+    button {
+      text-align: center;
+      background-color: rgba(0, 0, 0, .8);
+      border: none;
+      cursor: pointer;
+      padding: 18px 24px;
+      outline: none;
+
+      &:focus,
+      &:active {
+        background-color: $red;
+      }
+
+      span {
+        display: none;
+      }
+
+      svg {
+        width: 10px;
+        height: 18.64px;
+        fill: white;
+      }
+    }
+
+    button:last-child {
+      float: right;
+    }
+  }
 }
 
 
+.Slider__Content {
+  width: 800px;
+  padding: 0px 80px;
+  transform: translate(-160px, -300px);
+  height: 600px;
+  max-height: 90vh;
+  vertical-align: middle;
+  display: table;
+  z-index: 1;
+  position: fixed;
+  top: 150%;
+  right: 0;
 
+  @media($xxlg) {
+    transform: translate(-100px, -225px);
+    width: 600px;
+    height: 450px;
+  }
 
-.Slider__Slide{
-	display: flex;
-	width: 100%;
-	height: 100%;
-	align-items: center;
-	justify-content: flex-end;
-	position: absolute;
-	opacity: 1;
-	z-index: 1;
-	top: 100%;
-	left: 0;
-	@media($md){
-		align-items: start;
-		&:before{
-			content: "";
-			position: absolute;
-			background-color: transparent;
-			left: 0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-			z-index: 1;
-		}
-	}
+  @media($lg) {
+    transform: translate(-80px, -225px);
+  }
+
+  @media($md) {
+    width: 100%;
+    margin: 0;
+    height: calc(100vh - #{$menu-size} - 58.64px);
+    transform: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: relative;
+  }
+
+  .Slider__Content__Cell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  h2 {
+    font-size: 72px;
+    font-family: $title-font;
+    position: relative;
+    white-space: pre-line;
+    @media($xxlg) {
+      font-size: 68px;
+    }
+
+    @media($phone) {
+      font-size: 50px;
+    }
+
+    @media($phone-sm) {
+      font-size: 42px;
+    }
+  }
+
+  p {
+    position: relative;
+  }
+
+  .Slider__Box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: auto;
+
+    @media($xxlg) {
+      width: 600px;
+      height: auto;
+    }
+
+    @media($md) {
+      display: none;
+    }
+
+    rect {
+      stroke-width: 3px;
+      stroke: $red;
+      stroke-dasharray: 150 540;
+      fill: rgba(255, 255, 255, .75);
+
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        stroke-dasharray: 660 0;
+        stroke-width: 1px;
+      }
+    }
+  }
+}
+
+.Slider__Slide {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  opacity: 1;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+
+  @media($md) {
+    align-items: start;
+    top: 0;
+    left: 100%;
+
+    &:before {
+      content: "";
+      position: absolute;
+      background-color: rgba(255, 255, 255, .8);
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 1;
+    }
+  }
 }
 
 
-$aniDuration: 0.5s;
+$aniDuration: .5s;
+$aniBoxDuration: .5s;
 
-.Slider__Slide.Active{
-	top: 0;
-	.Slider__Box{
-		rect{
-			animation: 1s box linear forwards .5s;
-		}
-	}
-	@media($md){
-		&:before{
-			background-color: rgba(255,255,255, .8);
-		}
-	}
+.Slider__Slide.Active {
+  top: 0;
+  left: 0;
+
+  .Slider__Content {
+    top: 50%;
+
+    @media($md) {
+      top: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      animation: $aniBoxDuration boxfadein cubic-bezier(0.4, 0, 1, 1) forwards 0s;
+    }
+  }
+
+  .Slider__Box rect {
+    animation: 0.5s box linear forwards 0s;
+  }
+
+
 }
 
-.Slider__Slide.center2next{
-	animation: $aniDuration center2next linear forwards 0s;
+.Slider__Slide.center2next {
+  animation: $aniDuration center2top linear forwards 0s;
+
+  @media($md) {
+    animation: $aniDuration center2right linear forwards 0s;
+  }
+
+  .Slider__Content {
+    animation: $aniBoxDuration boxcenter2right cubic-bezier(0.4, 0, 1, 1) forwards 0s;
+
+    @media($md) {
+      animation: none;
+    }
+  }
 }
-.Slider__Slide.center2prev{
-	animation: $aniDuration center2prev linear forwards 0s;	
+
+.Slider__Slide.center2prev {
+  animation: $aniDuration center2bottom linear forwards 0s;
+
+  @media($md) {
+    animation: $aniDuration center2left linear forwards 0s;
+  }
+
+  .Slider__Content {
+    animation: $aniBoxDuration boxcenter2right cubic-bezier(0.4, 0, 1, 1) forwards 0s;
+
+    @media($md) {
+      animation: none;
+    }
+  }
 }
-.Slider__Slide.prev2center{
-	animation: $aniDuration prev2center linear forwards 0s;	
+
+.Slider__Slide.prev2center {
+  animation: $aniDuration top2center linear forwards 0s;
+  z-index: 2;
+
+  @media($md) {
+    animation: $aniDuration left2center linear forwards 0s;
+  }
+
+  .Slider__Content {
+    animation: $aniBoxDuration boxtop2center ease forwards 0s;
+
+    @media($md) {
+      animation: none;
+      opacity: 0;
+    }
+  }
 }
 
-.Slider__Slide.next2center{
-	animation: $aniDuration next2center linear forwards 0s;	
+.Slider__Slide.next2center {
+  animation: $aniDuration bottom2center linear forwards 0s;
+  z-index: 2;
+
+  @media($md) {
+    animation: $aniDuration right2center linear forwards 0s;
+  }
+
+  .Slider__Content {
+    animation: $aniBoxDuration boxbottom2center ease forwards 0s;
+
+    @media($md) {
+      animation: none;
+      opacity: 0;
+    }
+  }
+
 }
-
-
-
-
-
-
-
 
 
 
 @keyframes box {
   0% {
-  	stroke-dasharray: 150 540;
+    stroke-dasharray: 150 540;
   }
+
   100% {
-  	stroke-dasharray: 660 0;
+    stroke-dasharray: 660 0;
   }
 }
 
-
-@keyframes center2next{
+@keyframes boxcenter2right {
   0% {
-  	top: 0;
+    right: 0;
   }
+
   100% {
-  	top: 100%;
+    right: -100%;
   }
 }
 
-
-@keyframes center2prev {
+@keyframes boxbottom2center {
   0% {
-  	top: 0;
+    top: -150%;
   }
+
   100% {
-  	top: -100%;
+    top: 50%;
   }
 }
 
-
-@keyframes prev2center {
+@keyframes boxtop2center {
   0% {
-  	top: -100%;
+    top: 150%;
   }
+
   100% {
-  	top: 0;
+    top: 50%;
   }
 }
 
-
-@keyframes next2center {
+@keyframes boxfadein {
   0% {
-  	top: 100%;
+    opacity: 0;
+    top: 30px;
   }
+
   100% {
-  	top: 0;
+    opacity: 1;
+    top: 0;
   }
 }
 
+@keyframes boxfadeout {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+
+
+@keyframes center2top {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: 100%;
+  }
+}
+
+
+@keyframes center2bottom {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: -100%;
+  }
+}
+
+@keyframes center2right {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes center2left {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: -100%;
+  }
+}
+
+
+@keyframes top2center {
+  0% {
+    top: -100%;
+  }
+
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes left2center {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 0;
+  }
+}
+
+
+
+@keyframes bottom2center {
+  0% {
+    top: 100%;
+  }
+
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes right2center {
+  0% {
+    left: 100%;
+  }
+
+  100% {
+    left: 0;
+  }
+}
