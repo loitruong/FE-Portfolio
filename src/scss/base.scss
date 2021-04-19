@@ -27,14 +27,6 @@ body{
 		height: auto;
 	}
 }
-.body-container.loading{
-	.ContainerLoader{
-		display: flex;
-	}
-	.app-container{
-		opacity: 0;
-	}
-}
 .home{
 	display: flex;
 	width: 100%;
@@ -213,38 +205,6 @@ button.text-button, a.text-button{
 	}
 }
 
-.ContainerLoader{
-	display: none;
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	//background-color: white;
-	z-index: 99;
-	top: 0;
-	right: 0;
-	left: 300px;
-	bottom: 0;
-	//display: flex;
-	justify-content: center;
-	align-items: center;
-	img{
-		transform: translateX(-150px);
-		@media($lg){
-			transform: translateX(-120px);
-		}
-		@media($md){
-			transform: translate(0, -#{$menu-size});
-		}
-	}
-	@media($lg){
-		left: 240px;
-	}
-	@media($md){
-		left: 0;
-		min-height: calc(100vh - #{$menu-size});
-		top: $menu-size;
-	}
-}
 
 
 

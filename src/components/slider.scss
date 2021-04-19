@@ -362,6 +362,15 @@
   }
 }
 
+.Slider__Slide.Loading{
+  align-items: center;
+  justify-content: center;
+  .fas{
+    font-size: 60px;
+    color: $red;
+  }
+}
+
 
 $aniDuration: .5s;
 $aniBoxDuration: .5s;
