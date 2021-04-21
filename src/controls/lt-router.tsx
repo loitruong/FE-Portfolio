@@ -10,6 +10,7 @@ import {
 
 import Home from '../views/home';
 import About from '../views/about';
+import Blog from '../views/blog';
 import NotFound from '../views/404';
 
 /**
@@ -59,7 +60,7 @@ export default class LTRouter{
 								 PageType.PROJECTS, 'Projects', 'Look at my awesome works', LinkType.PAGE);
 
 
-		this.addLInk('/blog', React.createElement(About),
+		this.addLInk('/blog', React.createElement(Blog),
 								PageType.BLOG, 'Blog', 'Read my latest update', LinkType.PAGE);
 
 

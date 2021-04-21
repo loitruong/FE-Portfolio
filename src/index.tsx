@@ -4,7 +4,7 @@ import './index.scss';
 import Header from './components/header';
 import ltConfig from './controls/lt-config';
 import LTRouter from './controls/lt-router';
-
+import 'react-app-polyfill/ie11';
 
 class App extends React.Component {
   constructor(props:any){
@@ -14,7 +14,7 @@ class App extends React.Component {
   render() {
     return (
 			<div id="reactApp">
-					{ltConfig.myRouter.getRouter( <Header /> )}
+					{ltConfig.myRouter!.getRouter( <Header /> )}
 			</div>
     );
   }

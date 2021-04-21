@@ -1,0 +1,27 @@
+@import '../scss/variables.scss';
+
+.PostList{
+	header{
+		min-height: 0;
+	}
+	article{
+		margin-bottom: 80px;
+	}
+	h2{
+		font-family: $title-font;
+		margin: 0 0 5px;
+	}
+	p{
+		font-size: 18px;
+	}
+	.PostList_Post{
+		position: relative;
+		opacity: 1;
+		transform: translateY(0px);
+		transition:  ease 1s all;
+		&.ScrollListener{
+			opacity: 0;
+			transform: translateY(300px);
+		}
+	}
+}

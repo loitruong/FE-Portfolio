@@ -9,11 +9,20 @@ import LTRouter from './lt-router';
 
 
 interface LTConfig {
-	myRouter : LTRouter
+	myRouter : LTRouter | null
+	myAPIs 	 : Array<API>
 }
 
-const ltConfig : LTConfig | any = {
+interface API{
+	name: string;
+	url: string
+}
 
+const ltConfig : LTConfig = {
+	myRouter: null,
+	myAPIs : [
+		{name: 'api.blog', url: process.env.REACT_APP_API_URL+'/posts'}
+	]
 }
 
 // Object.freeze(ltConfig)

@@ -62,7 +62,7 @@ export default class Slider extends React.Component < {}, { slideState: Banner }
         title: 'Developing \n the Future',
         desc: 'Click to check out my works!',
         linkName: 'My Works',
-        link: ltConfig.myRouter.getLink(PageType.PROJECTS) !.url
+        link: ltConfig.myRouter!.getLink(PageType.PROJECTS) !.url
         //link: ''
       },
       {
@@ -70,14 +70,14 @@ export default class Slider extends React.Component < {}, { slideState: Banner }
         title: 'Experienced \n Web Developer',
         desc: 'Know more about me',
         linkName: 'About Me',
-        link: ltConfig.myRouter.getLink(PageType.ABOUT) !.url
+        link: ltConfig.myRouter!.getLink(PageType.ABOUT) !.url
       },
       {
         img: "banner-03.jpg",
         title: 'Connecting \n the Web',
         desc: 'Tell me your concerns',
         linkName: 'Contact Me',
-        link: ltConfig.myRouter.getLink(PageType.CONTACT) !.url
+        link: ltConfig.myRouter!.getLink(PageType.CONTACT) !.url
       }
     ];
 
@@ -251,8 +251,9 @@ class Slide extends React.Component < { banner: Banner, isActive: boolean }, { i
     this.state = {
       isLoading: true
     };
-
-    this.loading();
+  }
+  componentDidMount(){
+  	this.loading();
   }
   loading() {
     let self = this;
