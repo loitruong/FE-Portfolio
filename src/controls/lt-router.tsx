@@ -5,12 +5,13 @@ import {
     Route,
     // Link as RouterLink,
     // useRouteMatch,
-    // useParams
+    useParams
 } from "react-router-dom";
 
 import Home from '../views/home';
 import About from '../views/about';
 import Blog from '../views/blog';
+import Post from '../views/post';
 import NotFound from '../views/404';
 
 /**
@@ -29,6 +30,7 @@ export interface Link{
 	title: string;
 	desc: string;
 	type: LinkType;
+
 }
 
 enum LinkType{
@@ -42,6 +44,11 @@ export enum PageType{
 	BLOG = "Blog",
 	PROJECTS = "Projects",
 	CONTACT = "Contact"
+}
+
+function PostRouterHook(){
+	let {slug} = useParams() as any;
+	return <Post slug={slug} />;
 }
 
 export default class LTRouter{
@@ -93,13 +100,19 @@ export default class LTRouter{
 		return this.links.filter( (link) => link.type ===  LinkType.PAGE);
 	}
 
+
+
 	public getRouter(children:JSX.Element){
+
 		return(
 			<Router>
 					{children}
 			  	<div className="body-container">
 						<div className="app-container">
 							<Switch>
+								<Route path="/blog/:slug">
+									<PostRouterHook />
+								</Route>
 								{this.links.map((link) => {
 								        return <Route key="{link.name}" exact path={link.url}>{link.element}</Route>
 								})}

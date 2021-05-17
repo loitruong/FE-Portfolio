@@ -54,7 +54,8 @@ export default class Header extends React.Component {
 				<nav>
 					<ul>
 					{ltConfig.myRouter!.getMenuLinks().map((link:Link) => {
-	           return <li key={link.name}><NavLink data-text={link.name} exact to={`${link.url}`}><span>{link.name}</span></NavLink></li>
+
+	           return <li key={link.name}><NavLink data-text={link.name} exact={link.name === 'Blog' ? false: true} to={`${link.url}`}><span>{link.name}</span></NavLink></li>
 					})}
 					</ul>
           <div className="socialmedia">

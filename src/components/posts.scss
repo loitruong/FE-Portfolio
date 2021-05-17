@@ -1,4 +1,5 @@
 @import '../scss/variables.scss';
+@import '../scss/prism.scss';
 
 .PostList{
 	header{
@@ -23,5 +24,19 @@
 			opacity: 0;
 			transform: translateY(300px);
 		}
+	}
+}
+
+header.page-title{
+	min-height: 0;
+}
+
+#PostContent{
+	font-size: 18px;
+	h2{
+		margin-top: 40px;
+	}
+	iframe{
+		margin: 20px 0;
 	}
 }

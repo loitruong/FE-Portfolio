@@ -2,7 +2,17 @@ import React from 'react';
 import axios from 'axios';
 import Loader from './loader';
 import ltConfig from '../controls/lt-config';
+import {NavLink} from "react-router-dom";
+
+//Adding prismjs 
+import Prism from "prismjs";
+import 'prismjs/plugins/toolbar/prism-toolbar';
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
+import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
+
+
 import './posts.scss';
+
 
 interface cState {
   isLoading: boolean,
@@ -15,27 +25,42 @@ class Post {
   excerpt: string;
   date: Date;
   slug: string;
-  constructor(id: number, title: string, excerpt: string, publishDate: Date, slug: string) {
+  content: string;
+  constructor(id: number, title: string, excerpt: string, publishDate: Date, slug: string, content: string = "") {
     this.id = id;
     this.title = title;
     this.excerpt = excerpt;
     this.date = publishDate;
     this.slug = slug;
+    this.content = content;
   }
-  static fromJSON(x: string): Post {
-    let mJSONObj = JSON.parse(x);
-    return new Post(mJSONObj['ID'],
-      mJSONObj['post_title'],
-      mJSONObj['post_excerpt'],
-      new Date(mJSONObj['post_datetime']),
-      mJSONObj['slug']);
+  
+  getPostDate(){
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"];
+    return monthNames[this.date.getMonth()] + " " + String("00" + this.date.getDate()).slice(-2) + ", " + this.date.getFullYear();
   }
-  static fromJSONList(x: string): Array < Post > {
-    let mJSONObj = JSON.parse(x);
+
+
+  static fromJSON(jsonObj:any): Post {
+    if (jsonObj['ID'] === null){
+      throw new Error('Empty Post');
+    }
+    
+    return new Post(
+      jsonObj['ID'],
+      jsonObj['post_title'],
+      jsonObj['post_excerpt'],
+      new Date(jsonObj['post_datetime']),
+      jsonObj['slug'],
+      jsonObj['post_content']
+    );
+  }
+  static fromJSONList(jsonObj: JSON): Array <Post> {
     let posts: Array < Post > = [];
 
-    if (Array.isArray(mJSONObj)) {
-      mJSONObj.forEach((pJson) => {
+    if (Array.isArray(jsonObj)) {
+      jsonObj.forEach((pJson) => {
         posts.push(new Post(
           pJson['ID'],
           pJson['post_title'],
@@ -63,15 +88,12 @@ export default class Posts extends React.Component < {}, cState > {
       isError: false
     }
     this.mPosts = [];
+
+    this._scrollHandler = this._scrollHandler.bind(this);
+
   }
 
-  postDateFormater(date:Date){
-  	const monthNames = ["January", "February", "March", "April", "May", "June",
-  	  "July", "August", "September", "October", "November", "December"];
-  	
-  	
-  	return monthNames[date.getMonth()] + " " + String("00" + date.getDate()).slice(-2) + ", " + date.getFullYear();
-  }
+
 
   componentDidMount() {
     var self = this;
@@ -79,7 +101,6 @@ export default class Posts extends React.Component < {}, cState > {
       .then(function(response) {
         // handle success
         self.mPosts = Post.fromJSONList(response.data);
-        console.log(self.mPosts);
       })
       .catch(function(error) {
         // handle error
@@ -89,10 +110,40 @@ export default class Posts extends React.Component < {}, cState > {
         })
       })
       .then(function() {
-        self.setState({
-          isLoading: false
-        })
+        self._componentGotData();
       });
+  }
+
+  _componentGotData(){
+    let self = this;
+    self.setState({
+      isLoading: false
+    });
+
+    //Adding scroll handler
+    window.addEventListener('scroll', self._scrollHandler, false);
+    self._scrollHandler();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._scrollHandler);
+  }
+
+  _scrollHandler(){
+    //console.log(window.pageYOffset);
+    var scrollElements = document.getElementsByClassName("ScrollListener");
+
+    Array.from(scrollElements).forEach((element) => {
+        // Do stuff here
+        var elementTop = element.getBoundingClientRect().top;
+        //get all browser support - window inner height.
+        var innerHeight = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
+
+
+        if(elementTop - innerHeight - 200  <= 0){
+          element.classList.remove("ScrollListener");
+        }
+    });
   }
 
   render() {
@@ -110,15 +161,87 @@ export default class Posts extends React.Component < {}, cState > {
 	  		<section className="PostList">
 					{this.mPosts.map((x:Post, index) => {
 	          return  (
-	           	<article key={"post_"+x.id} className="PostList_Post">
-	           	  <header><h2>{x.title}</h2><time dateTime={x.date.toISOString()}>{this.postDateFormater(x.date)}</time></header>
+	           	<article key={"post_"+x.id} className="PostList_Post ScrollListener">
+	           	  <header><h2>{x.title}</h2><time dateTime={x.date.toISOString()}>{x.getPostDate()}</time></header>
 	           	  <p className="PostList_Description">{x.excerpt}</p>
-	           	  <footer><a className="text-button" href="/blog/a-complete-pie-chart-d3-js">Read More</a></footer>
+	           	  <footer><NavLink className="text-button"  to={"/blog/"+ x.slug}>Read More</NavLink></footer>
 	           	</article>
 	          );
 					})}
 	  		</section>
   	  </div>
+    );
+  }
+}
+
+
+
+
+
+export class PostComponent extends React.Component < {slug:string}, cState > {
+  postAPI: string;
+  mError: any;
+  mPost: Post | null;
+  slug:string;
+
+  constructor(props: any) {
+    super(props);
+    this.postAPI = ltConfig.myAPIs.find(x => x.name === "api.blog") !.url;
+    this.state = {
+      isLoading: true,
+      isError: false
+    }
+    this.slug = this.props.slug;
+    this.mPost = null ;
+  }
+
+
+  componentDidMount() {
+    var self = this;
+    axios.get(self.postAPI+"/?slug="+self.slug)
+      .then(function(response) {
+        // handle success
+        self.mPost = Post.fromJSON(response.data);
+      })
+      .catch(function(error) {
+        // handle error
+        self.mError = error;
+        self.setState({
+          isError: true
+        })
+      })
+      .then(function() {
+        self.setState({
+          isLoading: false
+        }, function(){
+          Prism.highlightAll();
+        })
+      });
+  }
+
+  render() {
+
+    if (this.state.isLoading) {
+      return <Loader />
+    }
+
+    if (this.state.isError) {
+      throw this.mError
+    }
+
+    if (this.mPost == null) {
+      //This need to throw better error
+      throw new Error('Empty Post');
+    }
+
+    return (
+      <article className="page-container">
+        <header className="page-title">
+          <h2>{this.mPost!.title}</h2>
+          <p><time dateTime={this.mPost!.date.toISOString()}>{this.mPost!.getPostDate()}</time></p>
+        </header>
+        <section id="PostContent" dangerouslySetInnerHTML={{ __html: this.mPost.content }}></section>
+      </article>
     );
   }
 }

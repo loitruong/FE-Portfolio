@@ -7,8 +7,8 @@ import Error from '../components/error';
 
 
 export default class Blog extends React.Component {
-	pageTitle: String;
-	pageDesc: String;
+	pageTitle: string;
+	pageDesc: string;
 
 	constructor(props:any){
 		super(props);

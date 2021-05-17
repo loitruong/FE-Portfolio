@@ -7,7 +7,6 @@ export default class Error extends React.Component<{},{hasError:boolean}> {
   }
 
   componentDidCatch(error:any, info:any) {
-  	console.log("lol where is my error?");
     this.setState({ hasError: true });
     this.logError(error, info);
   }
