@@ -55,27 +55,27 @@ export default class LTRouter{
 	links: Array<Link> = [];
 	constructor(){
 
-		this.addLInk('/', React.createElement(Home),
+		this.addLInk('/', <Home />,
 								PageType.HOME, 'LoiT\'s Portfolio', 'Welcome to Loi Truong\'s Portfolio!!', LinkType.PAGE);
 
 
-		this.addLInk('/about',React.createElement(About),
+		this.addLInk('/about', <About />,
 								PageType.ABOUT,'About Me', 'Get to Know Me Better',LinkType.PAGE);
 
 
-		this.addLInk('/projects', React.createElement(About),
-								 PageType.PROJECTS, 'Projects', 'Look at my awesome works', LinkType.PAGE);
+		// this.addLInk('/projects', <About />,
+		// 						 PageType.PROJECTS, 'Projects', 'Look at my awesome works', LinkType.PAGE);
 
 
-		this.addLInk('/blog', React.createElement(Blog),
+		this.addLInk('/blog', <Blog />,
 								PageType.BLOG, 'Blog', 'Read my latest update', LinkType.PAGE);
 
 
-		this.addLInk('/contact', React.createElement(About),
+		this.addLInk('/contact', <About />,
 								PageType.CONTACT, 'Contact', 'Keep Intouch', LinkType.PAGE);
 
 
-		this.addLInk('/*', React.createElement(NotFound),
+		this.addLInk('/*', <NotFound />,
 								'404', 'ERROR! PAGE NOT FOUND', 'This page could not be found!', LinkType.ERROR);
 
 

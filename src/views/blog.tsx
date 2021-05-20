@@ -18,6 +18,9 @@ export default class Blog extends React.Component {
 		this.pageDesc = mLink!.desc;
 
 	}
+	componentDidMount(){
+		document.title = "Blog - LoiT";
+	}
   render() {
   	return (
   		<div className="MyBlog">			

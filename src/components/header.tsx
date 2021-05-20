@@ -33,18 +33,25 @@ export default class Header extends React.Component {
 
 
     this.mySocialMedia.push({
-      href: 'tel:+15858316184',
-      name: 'Phone',
-      fa: 'fa fa-phone'
+      href: 'mailto:loitruong1989@gmail.com',
+      name: 'Email',
+      fa: 'fa fa-envelope'
     });
 
 
   }
+
+  _openMenu(){
+    let bodyEle = document.getElementsByTagName("body")[0];
+
+    bodyEle.classList.toggle("MenuOpen");
+  }
+
   render() {
     return (
       <div className="header-container clearfix">
 			  <header>
-        <div className="MobileControls"><button id="MobileMenuButton" type="button" className="MobileMenuButton"><i>Menu Toggle Button</i><span className="line line-1"></span><span className="line line-2"></span><span className="line line-3"></span></button></div>
+        <div className="MobileControls"><button id="MobileMenuButton" onClick={this._openMenu} type="button" className="MobileMenuButton"><i>Menu Toggle Button</i><span className="line line-1"></span><span className="line line-2"></span><span className="line line-3"></span></button></div>
 				<div className="Logo">
 					<NavLink  to={ltConfig.myRouter!.getLink(PageType.HOME)!.url}>
 						<span>Home</span>
@@ -54,8 +61,7 @@ export default class Header extends React.Component {
 				<nav>
 					<ul>
 					{ltConfig.myRouter!.getMenuLinks().map((link:Link) => {
-
-	           return <li key={link.name}><NavLink data-text={link.name} exact={link.name === 'Blog' ? false: true} to={`${link.url}`}><span>{link.name}</span></NavLink></li>
+            return <li key={link.name}><NavLink data-text={link.name} exact={link.name === 'Blog' ? false: true} to={`${link.url}`}><span>{link.name}</span></NavLink></li>
 					})}
 					</ul>
           <div className="socialmedia">

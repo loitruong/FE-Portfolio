@@ -215,6 +215,7 @@ export class PostComponent extends React.Component < {slug:string}, cState > {
           isLoading: false
         }, function(){
           Prism.highlightAll();
+          document.title = self.mPost!.title;
         })
       });
   }
