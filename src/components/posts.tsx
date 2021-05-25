@@ -89,8 +89,6 @@ export default class Posts extends React.Component < {}, cState > {
     }
     this.mPosts = [];
 
-    this._scrollHandler = this._scrollHandler.bind(this);
-
   }
 
 
@@ -121,30 +119,16 @@ export default class Posts extends React.Component < {}, cState > {
     });
 
     //Adding scroll handler
-    window.addEventListener('scroll', self._scrollHandler, false);
-    self._scrollHandler();
+    window.addEventListener('scroll', ltConfig.customEvents!.scrollHandler, false);
+    (window as any).ltScrollerTopPadding= 200;
+    ltConfig.customEvents!.scrollHandler();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this._scrollHandler);
+    window.removeEventListener('scroll', ltConfig.customEvents!.scrollHandler);
   }
 
-  _scrollHandler(){
-    //console.log(window.pageYOffset);
-    var scrollElements = document.getElementsByClassName("ScrollListener");
 
-    Array.from(scrollElements).forEach((element) => {
-        // Do stuff here
-        var elementTop = element.getBoundingClientRect().top;
-        //get all browser support - window inner height.
-        var innerHeight = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
-
-
-        if(elementTop - innerHeight - 200  <= 0){
-          element.classList.remove("ScrollListener");
-        }
-    });
-  }
 
   render() {
 

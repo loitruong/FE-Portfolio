@@ -1,0 +1,95 @@
+@import './variables.scss';
+
+.ContactInfo{
+	.ContactInfo__Column{
+		position: relative;
+		display: inline-block;
+		float: left;
+
+	}
+	.ContactInfo__Column:first-child{
+		margin-right: 100px;
+	}
+}
+.ContactForm{
+	background: $black;
+	color: white;
+	padding: 50px;
+	margin-top: 50px;
+	@media($half-sm){
+		padding: 50px 15px;
+	}
+	h1{
+		margin: 0 0 10px;
+		font-size: 28px;
+	}
+	h3{
+		font-size: 16px;
+		margin: 0;
+	}
+	form{
+		display: block;
+		margin-top: 50px;
+		label{
+			display: none;
+		}
+		input{
+			border: 1px solid white;
+			height: 40px;
+			width: 100%;
+			padding-left: 5px;
+			&:active, &:focus{
+				outline: solid $red 1px;
+			}
+		}
+		textarea{
+			width: 100%;
+			height: 130px;
+			padding: 5px;
+			resize: none;
+			&:active, &:focus{
+				outline: solid $red 1px;
+			}
+		}
+		button[type=submit]{
+			background: transparent;
+			border: 1px solid white;
+			margin-top: 30px;
+			font-size: 18px;
+			padding: 20px 50px;
+			color: white;
+			cursor: pointer;
+			transition: ease .3s all;
+			outline: none;
+			&:hover,&:focus,&:active{
+				background: white;
+				color: $black;
+			}
+		}
+	}
+	.ContactForm__Row{
+		margin: 0 -15px;
+		.ContactForm__Column{
+			width: 50%;
+			float: left;
+			padding: 0 15px;
+			margin-bottom: 30px;
+			@media($phone){
+				width: 100%;
+			}
+		}
+	}
+}
+
+.ThankYou{
+	background: $black;
+	color: white;
+	padding: 50px;
+	margin-top: 50px;
+	display: none;
+	h2{
+		font-size: 36px;
+		color: $red;
+		font-family: $title-font;
+	}
+}

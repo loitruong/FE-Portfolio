@@ -9,20 +9,37 @@ import LTRouter from './lt-router';
 
 
 interface LTConfig {
-	myRouter : LTRouter | null
-	myAPIs 	 : Array<API>
+  myRouter: LTRouter | null;
+  myAPIs: Array < API >;
+  customEvents: any;
 }
 
-interface API{
-	name: string;
-	url: string
+interface API {
+  name: string;
+  url: string;
 }
 
-const ltConfig : LTConfig = {
-	myRouter: null,
-	myAPIs : [
-		{name: 'api.blog', url: process.env.REACT_APP_API_URL+'/posts'}
-	]
+const ltConfig: LTConfig = {
+  myRouter: null,
+  myAPIs: [
+    { name: 'api.blog', url: process.env.REACT_APP_API_URL + '/posts' }
+  ],
+  customEvents: {
+    scrollHandler: function() {
+      var scrollElements = document.getElementsByClassName("ScrollListener");
+      var paddingTop = ((window as any).ltScrollerTopPadding !== undefined) ? (window as any).ltScrollerTopPadding : 200;
+      Array.from(scrollElements).forEach((element) => {
+        // Do stuff here
+        var elementTop = element.getBoundingClientRect().top;
+        //get all browser support - window inner height.
+        var innerHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
+
+        if (elementTop - innerHeight - paddingTop <= 0) {
+          element.classList.remove("ScrollListener");
+        }
+      });
+    }
+  }
 }
 
 // Object.freeze(ltConfig)

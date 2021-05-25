@@ -12,6 +12,7 @@ import Home from '../views/home';
 import About from '../views/about';
 import Blog from '../views/blog';
 import Post from '../views/post';
+import Contact from '../views/contact';
 import NotFound from '../views/404';
 
 /**
@@ -63,15 +64,15 @@ export default class LTRouter{
 								PageType.ABOUT,'About Me', 'Get to Know Me Better',LinkType.PAGE);
 
 
-		// this.addLInk('/projects', <About />,
-		// 						 PageType.PROJECTS, 'Projects', 'Look at my awesome works', LinkType.PAGE);
+		this.addLInk('/projects', <About />,
+								 PageType.PROJECTS, 'Projects', 'Look at my awesome works', LinkType.PAGE);
 
 
 		this.addLInk('/blog', <Blog />,
 								PageType.BLOG, 'Blog', 'Read my latest update', LinkType.PAGE);
 
 
-		this.addLInk('/contact', <About />,
+		this.addLInk('/contact', <Contact />,
 								PageType.CONTACT, 'Contact', 'Keep Intouch', LinkType.PAGE);
 
 
@@ -114,7 +115,7 @@ export default class LTRouter{
 									<PostRouterHook />
 								</Route>
 								{this.links.map((link) => {
-								        return <Route key="{link.name}" exact path={link.url}>{link.element}</Route>
+								  return <Route key="{link.name}" exact path={link.url}>{link.element}</Route>
 								})}
 							</Switch>
 						</div>

@@ -15,7 +15,7 @@ export default class Post extends React.Component < { slug: string }, {} > {
     return (
     	<div className="app-post">
 	      <Error>
-		  	    <PostComponent slug={this.slug} />
+		  	  <PostComponent slug={this.slug} />
 		  	</Error>
 	  	</div>
     );
