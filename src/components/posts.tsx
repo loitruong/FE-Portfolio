@@ -112,7 +112,7 @@ export default class Posts extends React.Component < {}, cState > {
       });
   }
 
-  _componentGotData(){
+  private _componentGotData(){
     let self = this;
     self.setState({
       isLoading: false

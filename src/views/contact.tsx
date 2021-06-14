@@ -20,11 +20,7 @@ export default class Contact extends React.Component{
             </div>
           </div>
   	      <Error>
-            <div className="ContactForm">
-              <h1>Get In Touch With Me</h1>
-              <h3>Say Hello! Don't be shy.</h3>
-              <ContactForm />
-            </div>
+            <ContactForm />
   		  	</Error>
   	  	</div>
       </div>

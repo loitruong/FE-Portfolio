@@ -32,12 +32,14 @@
 		margin-top: 50px;
 		label{
 			display: none;
+			user-select: none;
 		}
 		input{
 			border: 1px solid white;
 			height: 40px;
 			width: 100%;
 			padding-left: 5px;
+			user-select: none;
 			&:active, &:focus{
 				outline: solid $red 1px;
 			}
@@ -51,6 +53,10 @@
 				outline: solid $red 1px;
 			}
 		}
+		.ContactForm__Control.error input, .ContactForm__Control.error textarea{
+			border: 1px solid $red;
+		}
+
 		button[type=submit]{
 			background: transparent;
 			border: 1px solid white;
@@ -61,10 +67,22 @@
 			cursor: pointer;
 			transition: ease .3s all;
 			outline: none;
+			user-select: none;
 			&:hover,&:focus,&:active{
 				background: white;
 				color: $black;
 			}
+		}
+		button:disabled,
+		button[disabled]{
+			pointer-events: none;
+			background-color: gray;
+		}
+		span.ContactForm__ErrorText{
+			color: $red;
+			font-size: 12px;
+			display: block;
+			margin-top: 10px;
 		}
 	}
 	.ContactForm__Row{
@@ -86,7 +104,7 @@
 	color: white;
 	padding: 50px;
 	margin-top: 50px;
-	display: none;
+	// display: none;
 	h2{
 		font-size: 36px;
 		color: $red;

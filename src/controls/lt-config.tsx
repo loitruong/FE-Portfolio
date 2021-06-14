@@ -22,7 +22,8 @@ interface API {
 const ltConfig: LTConfig = {
   myRouter: null,
   myAPIs: [
-    { name: 'api.blog', url: process.env.REACT_APP_API_URL + '/posts' }
+    { name: 'api.blog', url: process.env.REACT_APP_API_URL + '/posts' },
+    { name: 'api.contact', url: process.env.REACT_APP_API_URL + '/contact' }
   ],
   customEvents: {
     scrollHandler: function() {

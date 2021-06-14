@@ -41,7 +41,7 @@ export default class Header extends React.Component {
 
   }
 
-  _openMenu(){
+  private _openMenu(){
     let bodyEle = document.getElementsByTagName("body")[0];
 
     bodyEle.classList.toggle("MenuOpen");
